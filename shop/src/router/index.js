@@ -7,7 +7,6 @@ import Account from '../components/account/Account.vue'
 
 import Addproduct from '../components/account/Addproduct.vue'
 import Myproduct from '../components/account/Myproduct.vue'
-import Editfile from '../components/account/Editfile.vue'
 
 
 Vue.use(VueRouter)
@@ -43,11 +42,7 @@ Vue.use(VueRouter)
     name: 'Myproduct',
     component: Myproduct
   },
-  {
-    path: '/edit',
-    name: 'Editfile',
-    component: Editfile
-  },
+
 ]
 
 const router = new VueRouter({

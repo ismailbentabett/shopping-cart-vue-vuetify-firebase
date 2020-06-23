@@ -6,15 +6,15 @@
           <router-link to="/" class="text-decoration-none white--text">Shopping Cart</router-link>
         </v-toolbar-title>
        <v-spacer></v-spacer>
-      <v-btn to="/login" flat dark>
+      <v-btn to="/login" flat dark v-if="userstate == false">
         <v-icon left>lock_open</v-icon>
         Login
       </v-btn>
-       <v-btn to="/signup" flat dark>
+       <v-btn to="/signup" flat dark v-if="userstate == false">
         <v-icon left>face</v-icon>
         Signup
       </v-btn>
-        <v-btn @click="Signout()" flat dark>
+        <v-btn @click="Signout()" flat dark   v-if="userstate == true">
         <v-icon left>input</v-icon>
         Logout
       </v-btn>
@@ -32,10 +32,11 @@
       </v-list-item>
 
       <v-divider></v-divider>
-
+<h4 v-if="userstate == false" class="white--text center">log in or sign our first</h4>
       <v-list
         dense
         nav
+        v-if="userstate == true"
       >
         <v-list-item link @click=" Gotoaccount()" :to="{name: 'Account', params: { id: gotothere }}">
           <v-list-item-icon>
@@ -87,9 +88,27 @@ export default {
       show:false,
        gotothere:null,
         right: null,
+        userstate:false
     }
   },
  
+created(){
+  const nami = this
+        firebase.auth().onAuthStateChanged(function(user) {
+console.log(user)
+
+    if(user != null){
+nami.userstate = true
+    }else{
+nami.userstate = false
+
+    }
+
+        })
+        console.log(this.userstate)
+
+}
+ ,
   methods:{
     Gotoaccount(){
 
@@ -107,6 +126,7 @@ this.gotothere = user.uid
     Signout(){
     firebase.auth().signOut().then(function() {
 console.log('signedout')
+this.$router.push({name:'Home'})
 }).catch(function(error) {
 console.log(error)
 });

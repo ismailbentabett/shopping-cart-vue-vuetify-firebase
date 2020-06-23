@@ -103,25 +103,30 @@ price:null
     methods:{
 
         Addproduct(){
+          let ok = this;
            let name = this.name;
            let categories =this.categories 
             let price = this.price
     firebase.auth().onAuthStateChanged(function(user) {
+
         console.log(user)
+        if(user != null){
 db.collection('product').add({
 name:name,
 categories:categories,
 price:price,
 user_id:user.uid
 
-}).then(function(docRef) {
-    console.log("Document written with ID: ", docRef.id);
+}).then(function() {
+    console.log("Document written with ID: ");
+    ok.$router.push({name:'Myproduct'})
+
 })
 
-}).catch(function(error) {
+}}
+).catch(function(error) {
 console.log(error)
 })
-
 
 
     }
