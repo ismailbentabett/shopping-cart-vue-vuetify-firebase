@@ -3,6 +3,12 @@ import VueRouter from 'vue-router'
 import Home from '../components/Home.vue'
 import Login from '../components/auth/Login.vue'
 import Signup from '../components/auth/Signup.vue'
+import Account from '../components/account/Account.vue'
+
+import Addproduct from '../components/account/Addproduct.vue'
+import Myproduct from '../components/account/Myproduct.vue'
+import Editfile from '../components/account/Editfile.vue'
+
 
 Vue.use(VueRouter)
 
@@ -22,7 +28,26 @@ Vue.use(VueRouter)
     name: 'Signup',
     component: Signup
   },
-
+  {
+    path: '/account/:id',
+    name: 'Account',
+    component: Account
+  },
+  {
+    path: '/add',
+    name: 'Addproduct',
+    component: Addproduct
+  },
+  {
+    path: '/product',
+    name: 'Myproduct',
+    component: Myproduct
+  },
+  {
+    path: '/edit',
+    name: 'Editfile',
+    component: Editfile
+  },
 ]
 
 const router = new VueRouter({

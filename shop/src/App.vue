@@ -14,15 +14,19 @@
         <v-icon left>face</v-icon>
         Signup
       </v-btn>
+        <v-btn @click="Signout()" flat dark>
+        <v-icon left>input</v-icon>
+        Logout
+      </v-btn>
     </v-app-bar>
      <v-navigation-drawer v-model="show" dark absolute temporary>
           <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title">
-            Application
+            Shop
           </v-list-item-title>
           <v-list-item-subtitle>
-            subtext
+              choose
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -33,17 +37,31 @@
         dense
         nav
       >
-        <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          link
-        >
+        <v-list-item link @click=" Gotoaccount()" :to="{name: 'Account', params: { id: gotothere }}">
           <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon >account_circle</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <v-list-item-title >Account</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+       <v-list-item to="/product" link>
+          <v-list-item-icon>
+            <v-icon >view_quilt</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title >My Products</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item  to="/add"  link>
+          <v-list-item-icon>
+            <v-icon >add_circle</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title >Add Product</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -58,7 +76,7 @@
 </template>
 
 <script>
-
+import firebase from './firebase/init'
 export default {
   name: 'App',
 
@@ -67,13 +85,32 @@ export default {
   data(){
     return{
       show:false,
-       items: [
-          { title: 'Dashboard', icon: 'mdi-view-dashboard' },
-          { title: 'Photos', icon: 'mdi-image' },
-          { title: 'About', icon: 'mdi-help-box' },
-        ],
+       gotothere:null,
         right: null,
     }
   },
+ 
+  methods:{
+    Gotoaccount(){
+
+      var user = firebase.auth().currentUser;
+
+if (user) {
+this.gotothere = user.uid
+
+} else {
+  console.log('connect first nigga')
+}
+    }
+    ,
+
+    Signout(){
+    firebase.auth().signOut().then(function() {
+console.log('signedout')
+}).catch(function(error) {
+console.log(error)
+});
+    }
+  }
 };
 </script>

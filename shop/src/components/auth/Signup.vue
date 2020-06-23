@@ -42,6 +42,7 @@
                       name="Signup"
                       prepend-icon="mdi-account"
                       type="text"
+                      v-model="email"
                     ></v-text-field>
   
                     <v-text-field
@@ -50,12 +51,13 @@
                       name="password"
                       prepend-icon="mdi-lock"
                       type="password"
+                      v-model="password"
                     ></v-text-field>
                   </v-form>
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="dark" dark>Signup</v-btn>
+                  <v-btn color="dark" @click="Signup()" dark>Signup</v-btn>
                 </v-card-actions>
               </v-card>
             </v-col>
@@ -65,13 +67,28 @@
 </template>
 
 <script>
+import firebase from '../../firebase/init'
+
   export default {
     name: 'Signup',
 
     data(){
      return{
-
+       email:null,
+       password:null
      }
     },
+    methods:{
+      Signup(){
+  firebase.auth().createUserWithEmailAndPassword(this.email, this.password).catch(function(error) {
+  // Handle Errors here.
+  console.log(error.code);
+   console.log(error.message);
+
+  // ...
+});
+      }
+
+    }
   }
 </script>

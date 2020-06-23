@@ -1,6 +1,6 @@
 <template>
 <v-app>
-        <v-container
+  <v-container
           class="fill-height"
           fluid
         >
@@ -19,7 +19,7 @@
                   dark
                   flat
                 >
-                  <v-toolbar-title>Login</v-toolbar-title>
+                  <v-toolbar-title>Signup</v-toolbar-title>
                   <v-spacer></v-spacer>
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
@@ -37,27 +37,36 @@
                 </v-toolbar>
                 <v-card-text>
                   <v-form>
+                      <v-select
+                        v-model="categories"
+                        :items="items"
+                        :rules="[v => !!v || 'Item is required']"
+                        label="Categories"
+                        required
+                        ></v-select>
                     <v-text-field
-                      label="Login"
-                      name="login"
+                      label="Product name"
+                      name="Name"
                       prepend-icon="mdi-account"
                       type="text"
-                      v-model="email"
+                      v-model="name"
+                     required
                     ></v-text-field>
-  
+                        
                     <v-text-field
-                      id="password"
-                      label="Password"
-                      name="password"
+                      id="Price"
+                      label="Price"
+                      name="Price"
                       prepend-icon="mdi-lock"
-                      type="password"
-                      v-model="password"
+                      type="Number"
+                      v-model="price"
+                      required
                     ></v-text-field>
                   </v-form>
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="dark" @click="Signin()" dark>Login</v-btn>
+                  <v-btn color="dark" @click=" Addproduct()" dark>Add</v-btn>
                 </v-card-actions>
               </v-card>
             </v-col>
@@ -68,31 +77,55 @@
 
 <script>
 import firebase from '../../firebase/init'
-
+var db = firebase.firestore()
   export default {
-    name: 'Login',
+    name: 'Addproduct',
 
     data(){
      return{
-       email:null,
-       password:null
+         select:null,
+categories:null,
+name:null,
+price:null
+         ,
+    items: [
+        "tech",
+        'food',
+        'random shit',
+        'drugs',
+        'chlothes',
+      ],
      }
     },
-    methods:{
-      Signin(){
-  firebase.auth().signInWithEmailAndPassword(this.email, this.password)
-  .then(user =>{
-this.$router.push({ name: 'Account', params: { id: user.user.uid } })
-  })
-  .catch(function(error) {
-  // Handle Errors here.
-  console.log(error.code);
-   console.log(error.message);
 
-  // ...
-});
-      }
+
+
+    methods:{
+
+        Addproduct(){
+           let name = this.name;
+           let categories =this.categories 
+            let price = this.price
+    firebase.auth().onAuthStateChanged(function(user) {
+        console.log(user)
+db.collection('product').add({
+name:name,
+categories:categories,
+price:price,
+user_id:user.uid
+
+}).then(function(docRef) {
+    console.log("Document written with ID: ", docRef.id);
+})
+
+}).catch(function(error) {
+console.log(error)
+})
+
+
 
     }
+    }
+   
   }
 </script>
