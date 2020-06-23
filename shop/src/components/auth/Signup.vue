@@ -79,14 +79,33 @@ import firebase from '../../firebase/init'
      }
     },
     methods:{
+forceRerender() {
+        // Remove my-component from the DOM
+        this.renderComponent = false;
+
+        this.$nextTick(() => {
+          // Add the component back in
+          this.renderComponent = true;
+        });
+      }
+      ,
       Signup(){
-  firebase.auth().createUserWithEmailAndPassword(this.email, this.password).catch(function(error) {
+  firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+  .then(()=>{
+    this.$router.push({name:'Home'})
+    this.forceRerender();
+
+  })
+  .catch(function(error) {
   // Handle Errors here.
   console.log(error.code);
    console.log(error.message);
 
   // ...
 });
+  this.$router.push({name:'Home'})
+    this.forceRerender();
+
       }
 
     }

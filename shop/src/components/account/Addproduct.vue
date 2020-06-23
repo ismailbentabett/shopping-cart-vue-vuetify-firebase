@@ -103,7 +103,6 @@ price:null
     methods:{
 
         Addproduct(){
-          let ok = this;
            let name = this.name;
            let categories =this.categories 
             let price = this.price
@@ -119,7 +118,6 @@ user_id:user.uid
 
 }).then(function() {
     console.log("Document written with ID: ");
-    ok.$router.push({name:'Myproduct'})
 
 })
 

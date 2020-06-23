@@ -82,6 +82,7 @@ import firebase from '../../firebase/init'
       Signin(){
   firebase.auth().signInWithEmailAndPassword(this.email, this.password)
   .then(user =>{
+    console.log('logged')
 this.$router.push({ name: 'Account', params: { id: user.user.uid } })
   })
   .catch(function(error) {

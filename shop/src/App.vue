@@ -14,8 +14,15 @@
         <v-icon left>face</v-icon>
         Signup
       </v-btn>
-        <v-btn @click="Signout()" flat dark   v-if="userstate == true">
-        <v-icon left>input</v-icon>
+       
+    <v-avatar>
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/shopping-cart-e229a.appspot.com/o/profile%2Fismail.jpg?alt=media&token=17cf24ed-442f-4e3c-906f-dd0b5b840b96" 
+         v-if="userstate == true"
+      >
+    </v-avatar>
+        <v-btn @click="Signout()"  flat dark   v-if="userstate == true">
+        <v-icon  left>input</v-icon>
         Logout
       </v-btn>
     </v-app-bar>
@@ -121,15 +128,30 @@ this.gotothere = user.uid
   console.log('connect first nigga')
 }
     }
-    ,
+
+,
+forceRerender() {
+        // Remove my-component from the DOM
+        this.renderComponent = false;
+
+        this.$nextTick(() => {
+          // Add the component back in
+          this.renderComponent = true;
+        });
+      }
+,
+
 
     Signout(){
-    firebase.auth().signOut().then(function() {
+
+    firebase.auth().signOut().then(()=>{
 console.log('signedout')
 this.$router.push({name:'Home'})
+this.forceRerender();
 }).catch(function(error) {
 console.log(error)
 });
+
     }
   }
 };

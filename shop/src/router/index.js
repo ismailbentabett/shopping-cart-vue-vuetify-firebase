@@ -30,7 +30,7 @@ Vue.use(VueRouter)
   {
     path: '/account/:id',
     name: 'Account',
-    component: Account
+    component: Account,
   },
   {
     path: '/add',
