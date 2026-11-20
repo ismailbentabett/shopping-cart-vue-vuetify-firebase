@@ -116,7 +116,7 @@ Because the router uses history mode, configure your host to rewrite unknown pat
 
 ## ⚙️ Configuration
 
-Firebase is configured in [`shop/src/firebase/init.js`](shop/src/firebase/init.js) through a standard Firebase web config object. To run the app against your own project, replace the values in that object with the ones from **Firebase console → Project settings → Your apps → Web app**:
+Firebase is configured in [`shop/src/firebase/init.js`](shop/src/firebase/init.js) through a standard Firebase web config object whose values are read from `VUE_APP_FIREBASE_*` environment variables. Copy [`shop/.env.example`](shop/.env.example) to `shop/.env.local` and fill it with the values from **Firebase console → Project settings → Your apps → Web app**:
 
 | Key | Description |
 | --- | --- |
@@ -128,7 +128,7 @@ Firebase is configured in [`shop/src/firebase/init.js`](shop/src/firebase/init.j
 | `messagingSenderId` | Cloud Messaging sender ID |
 | `appId` | Firebase web app ID |
 
-The app currently reads these values from source rather than environment variables; moving them to `VUE_APP_*` variables is on the roadmap.
+`.env.local` is git-ignored, so your keys stay out of the repository.
 
 **Data model used by the app**
 
@@ -161,7 +161,7 @@ Lock these down with Firestore and Storage security rules so users can only read
 - [ ] Shopping cart state (add to cart, quantities, totals) and a cart drawer
 - [ ] Public product catalogue on the home page with working search and category filters
 - [ ] Attach uploaded images to products and show them on product cards
-- [ ] Move Firebase config to `VUE_APP_*` environment variables with a `.env.example`
+- [x] Move Firebase config to `VUE_APP_*` environment variables with a `.env.example`
 - [ ] Ship Firestore and Storage security rules in the repository
 - [ ] Form validation and user-facing error messages for auth and product forms
 - [ ] Centralized state with Vuex or Pinia

@@ -158,8 +158,8 @@ price:null
     items: [
         "tech",
         'food',
-        'random shit',
-        'drugs',
+        'Accessories',
+        'Electronics',
         'chlothes',
       ],
       id:null
