@@ -125,7 +125,7 @@ if (user) {
 this.gotothere = user.uid
 
 } else {
-  console.log('connect first nigga')
+  console.log('Please sign in first')
 }
     }
 
